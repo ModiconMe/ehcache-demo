@@ -4,16 +4,18 @@ import edu.modicon.ehcachedemo.application.dao.CustomerDao;
 import edu.modicon.ehcachedemo.domain.model.Customer;
 import edu.modicon.ehcachedemo.web.dto.CustomerDto;
 import edu.modicon.ehcachedemo.web.dto.CustomerRegistrationRequest;
+import edu.modicon.ehcachedemo.web.dto.CustomerUpdateRequest;
 import edu.modicon.ehcachedemo.web.dto.CustomersRegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.stat.Statistics;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,15 +25,10 @@ public class CustomerService {
     private final CustomerDao customerDao;
     private final CustomerDtoMapper customerDtoMapper;
 
-    private final SessionFactory sessionFactory;
+    private final CacheManager cacheManager;
 
     public List<CustomerDto> getAllCustomers() {
         log.info("fetch customers...");
-        log.info("L2 cache hits: " + sessionFactory.getStatistics().getSecondLevelCacheHitCount());
-        log.info("L2 cache puts: " + sessionFactory.getStatistics().getSecondLevelCachePutCount());
-        log.info("L1 cache puts: " + sessionFactory.getStatistics().getQueryCacheHitCount());
-        log.info("L1 cache puts: " + sessionFactory.getStatistics().getQueryCachePutCount());
-        log.info("L2 cache region names: " + Arrays.toString(sessionFactory.getStatistics().getSecondLevelCacheRegionNames()));
         return customerDao.fetchAllCustomer().stream().map(customerDtoMapper).toList();
     }
 
@@ -50,6 +47,9 @@ public class CustomerService {
 
     public void addCustomers(CustomersRegistrationRequest request) {
         request.getCustomers().forEach(c -> {
+            if (customerDao.existByEmail(c.getEmail())) {
+                throw new IllegalStateException("email already taken");
+            }
             customerDao.insertCustomer(Customer.builder()
                     .email(c.getEmail())
                     .name(c.getName())
@@ -58,15 +58,22 @@ public class CustomerService {
         });
     }
 
-    public CustomerDto getCustomer(String id) {
-        Statistics statistics = sessionFactory.getStatistics();
-        log.info("L2 cache hits: " + statistics.getSecondLevelCacheHitCount());
-        log.info("L2 cache puts: " + statistics.getSecondLevelCachePutCount());
-        log.info("L1 cache puts: " + statistics.getQueryCacheHitCount());
-        log.info("L1 cache puts: " + statistics.getQueryCachePutCount());
-        log.info("L2 cache region names: " + Arrays.toString(statistics.getSecondLevelCacheRegionNames()));
-        log.info("L2 cache puts: " + statistics.getEntityStatistics("edu.modicon.ehcachedemo.domain.model.Customer"));
-        return customerDao.fetchCustomerById(Long.parseLong(id)).map(customerDtoMapper).orElseGet(null);
+    public CustomerDto getCustomer(Long id) {
+        log.info("available caches: " + cacheManager.getCacheNames());
+        return customerDao.fetchCustomerById(id).map(customerDtoMapper).orElseGet(null);
+    }
+
+    public void updateCustomer(CustomerUpdateRequest request) {
+        Customer customer = customerDao.fetchCustomerById(request.getId())
+                .orElseThrow(() -> new IllegalStateException("customer not found"));
+
+        Customer updateCustomer = customer.toBuilder()
+                .name(request.getName() != null ? request.getName() : customer.getName())
+                .email(request.getEmail() != null ? request.getEmail() : customer.getEmail())
+                .age(request.getAge() != null ? request.getAge() : customer.getAge())
+                .build();
+
+        customerDao.updateCustomer(updateCustomer);
     }
 
 }

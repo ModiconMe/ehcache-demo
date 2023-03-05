@@ -15,7 +15,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import java.io.File;
 import java.util.Set;
 
-@EnableCaching
 @SpringBootApplication
 public class Application {
 

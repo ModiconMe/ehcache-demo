@@ -1,24 +1,25 @@
 package edu.modicon.ehcachedemo.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.persistence.*;
 
-import jakarta.persistence.*;
+import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+
+@ToString
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customer"
-//        uniqueConstraints = {@UniqueConstraint(name = "customer_email_unique", columnNames = "email")}
+@Table(name = "customer",
+        uniqueConstraints = {@UniqueConstraint(name = "customer_email_unique", columnNames = "email")}
 )
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-public class Customer {
+public class Customer implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 7467498459944585785L;
 
     @Id
     @SequenceGenerator(

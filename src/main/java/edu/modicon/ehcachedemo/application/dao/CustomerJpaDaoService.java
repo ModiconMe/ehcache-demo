@@ -3,6 +3,9 @@ package edu.modicon.ehcachedemo.application.dao;
 import edu.modicon.ehcachedemo.domain.model.Customer;
 import edu.modicon.ehcachedemo.domain.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,21 +21,30 @@ public class CustomerJpaDaoService implements CustomerDao {
         return repository.findAll();
     }
 
+    @Cacheable(value = "edu.modicon.ehcachedemo.domain.model.Customer", key = "#id")
     @Override
     public Optional<Customer> fetchCustomerById(Long id) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
         return repository.findById(id);
     }
 
+    @CachePut(value = "edu.modicon.ehcachedemo.domain.model.Customer", key = "#result.id")
     @Override
-    public void insertCustomer(Customer customer) {
-        repository.save(customer);
+    public Customer insertCustomer(Customer customer) {
+        return repository.save(customer);
     }
 
+    @CachePut(value = "edu.modicon.ehcachedemo.domain.model.Customer", key = "#customer.id")
     @Override
-    public void updateCustomer(Customer update) {
-        repository.save(update);
+    public Customer updateCustomer(Customer customer) {
+        return repository.save(customer);
     }
 
+    @CacheEvict(value = "edu.modicon.ehcachedemo.domain.model.Customer", key = "#id")
     @Override
     public void deleteCustomerById(Long id) {
         repository.deleteById(id);

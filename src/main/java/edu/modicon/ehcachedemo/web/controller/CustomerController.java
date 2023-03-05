@@ -3,6 +3,7 @@ package edu.modicon.ehcachedemo.web.controller;
 import edu.modicon.ehcachedemo.application.service.CustomerService;
 import edu.modicon.ehcachedemo.web.dto.CustomerDto;
 import edu.modicon.ehcachedemo.web.dto.CustomerRegistrationRequest;
+import edu.modicon.ehcachedemo.web.dto.CustomerUpdateRequest;
 import edu.modicon.ehcachedemo.web.dto.CustomersRegistrationRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,12 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public CustomerDto getCustomer(@PathVariable String id) {
-        return customerService.getCustomer(id);
+        return customerService.getCustomer(Long.parseLong(id));
+    }
+
+    @PutMapping("/{id}")
+    public void updateCustomer(@PathVariable String id, @RequestBody CustomerUpdateRequest request) {
+        customerService.updateCustomer(request.withId(Long.parseLong(id)));
     }
 
 }
