@@ -1,10 +1,10 @@
-package edu.modicon.ehcachedemo.web.controller;
+package edu.modicon.ehcachedemo.application.controller;
 
-import edu.modicon.ehcachedemo.application.service.CustomerService;
-import edu.modicon.ehcachedemo.web.dto.CustomerDto;
-import edu.modicon.ehcachedemo.web.dto.CustomerRegistrationRequest;
-import edu.modicon.ehcachedemo.web.dto.CustomerUpdateRequest;
-import edu.modicon.ehcachedemo.web.dto.CustomersRegistrationRequest;
+import edu.modicon.ehcachedemo.application.dto.CustomerDto;
+import edu.modicon.ehcachedemo.application.dto.CustomerRegistrationRequest;
+import edu.modicon.ehcachedemo.application.dto.CustomerUpdateRequest;
+import edu.modicon.ehcachedemo.application.dto.CustomersRegistrationRequest;
+import edu.modicon.ehcachedemo.domain.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,8 +1,7 @@
-package edu.modicon.ehcachedemo.web.dto;
+package edu.modicon.ehcachedemo.application.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 

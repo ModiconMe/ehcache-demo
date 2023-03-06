@@ -1,4 +1,4 @@
-package edu.modicon.ehcachedemo.domain.repository;
+package edu.modicon.ehcachedemo.infracture.repository;
 
 import edu.modicon.ehcachedemo.domain.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;

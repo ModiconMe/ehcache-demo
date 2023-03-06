@@ -17,3 +17,7 @@ spring:
   cache:
     jcache:
       config: classpath:ehcache.xml
+
+active-mq:
+  broker-url: tcp://localhost:61616
+  topic: demo.queue

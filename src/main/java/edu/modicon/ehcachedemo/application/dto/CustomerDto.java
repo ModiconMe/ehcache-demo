@@ -1,4 +1,4 @@
-package edu.modicon.ehcachedemo.web.dto;
+package edu.modicon.ehcachedemo.application.dto;
 
 import lombok.Builder;
 

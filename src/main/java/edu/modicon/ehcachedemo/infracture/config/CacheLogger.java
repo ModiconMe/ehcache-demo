@@ -1,4 +1,4 @@
-package edu.modicon.ehcachedemo.config;
+package edu.modicon.ehcachedemo.infracture.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ehcache.event.CacheEvent;

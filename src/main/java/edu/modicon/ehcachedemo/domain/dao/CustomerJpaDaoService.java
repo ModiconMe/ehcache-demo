@@ -1,7 +1,7 @@
-package edu.modicon.ehcachedemo.application.dao;
+package edu.modicon.ehcachedemo.domain.dao;
 
 import edu.modicon.ehcachedemo.domain.model.Customer;
-import edu.modicon.ehcachedemo.domain.repository.CustomerRepository;
+import edu.modicon.ehcachedemo.infracture.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;

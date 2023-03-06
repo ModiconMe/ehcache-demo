@@ -1,7 +1,7 @@
-package edu.modicon.ehcachedemo.application.service;
+package edu.modicon.ehcachedemo.domain.service;
 
 import edu.modicon.ehcachedemo.domain.model.Customer;
-import edu.modicon.ehcachedemo.web.dto.CustomerDto;
+import edu.modicon.ehcachedemo.application.dto.CustomerDto;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

@@ -1,4 +1,4 @@
-package edu.modicon.ehcachedemo.config;
+package edu.modicon.ehcachedemo.infracture.config;
 
 import edu.modicon.ehcachedemo.domain.model.Customer;
 import org.ehcache.clustered.client.config.builders.ClusteredResourcePoolBuilder;

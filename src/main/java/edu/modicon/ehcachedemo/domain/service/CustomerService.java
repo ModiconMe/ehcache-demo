@@ -1,20 +1,17 @@
-package edu.modicon.ehcachedemo.application.service;
+package edu.modicon.ehcachedemo.domain.service;
 
-import edu.modicon.ehcachedemo.application.dao.CustomerDao;
+import edu.modicon.ehcachedemo.domain.dao.CustomerDao;
 import edu.modicon.ehcachedemo.domain.model.Customer;
-import edu.modicon.ehcachedemo.web.dto.CustomerDto;
-import edu.modicon.ehcachedemo.web.dto.CustomerRegistrationRequest;
-import edu.modicon.ehcachedemo.web.dto.CustomerUpdateRequest;
-import edu.modicon.ehcachedemo.web.dto.CustomersRegistrationRequest;
+import edu.modicon.ehcachedemo.application.dto.CustomerDto;
+import edu.modicon.ehcachedemo.application.dto.CustomerRegistrationRequest;
+import edu.modicon.ehcachedemo.application.dto.CustomerUpdateRequest;
+import edu.modicon.ehcachedemo.application.dto.CustomersRegistrationRequest;
+import edu.modicon.ehcachedemo.infracture.queue.JmsProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.SessionFactory;
-import org.hibernate.stat.Statistics;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -26,6 +23,7 @@ public class CustomerService {
     private final CustomerDtoMapper customerDtoMapper;
 
     private final CacheManager cacheManager;
+    private final JmsProducer jwsProducer;
 
     public List<CustomerDto> getAllCustomers() {
         log.info("fetch customers...");
@@ -43,6 +41,8 @@ public class CustomerService {
                 .age(request.getAge())
                 .build();
         customerDao.insertCustomer(customer);
+
+        jwsProducer.sendMessage(customer);
     }
 
     public void addCustomers(CustomersRegistrationRequest request) {

@@ -24,7 +24,7 @@
         </expiry>
         <listeners>
             <listener>
-                <class>edu.modicon.ehcachedemo.config.CacheLogger</class>
+                <class>edu.modicon.ehcachedemo.infracture.config.CacheLogger</class>
                 <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
                 <event-ordering-mode>UNORDERED</event-ordering-mode>
                 <events-to-fire-on>CREATED</events-to-fire-on>

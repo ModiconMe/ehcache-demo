@@ -1,4 +1,4 @@
-package edu.modicon.ehcachedemo.application.dao;
+package edu.modicon.ehcachedemo.domain.dao;
 
 import edu.modicon.ehcachedemo.domain.model.Customer;
 
