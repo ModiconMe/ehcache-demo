@@ -8,4 +8,6 @@ pluginManagement {
 }
 
 rootProject.name = 'ehcache-demo'
+include 'customer'
+include 'payment'
 

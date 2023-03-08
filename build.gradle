@@ -1,44 +1,8 @@
-plugins {
-    id 'java'
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-}
-
-group 'edu.modicon'
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-repositories {
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'com.h2database:h2:2.1.214'
-//    runtimeOnly 'org.postgresql:postgresql'
-
-        // queue
-        implementation 'org.springframework.boot:spring-boot-starter-activemq'
-
-        compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
-
-        // caching
-        implementation 'org.ehcache:ehcache:3.10.8'
-        implementation 'org.ehcache:ehcache-clustered:3.10.8'
-        implementation 'org.springframework.boot:spring-boot-starter-cache'
-        implementation 'javax.cache:cache-api'
-
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+subprojects {
+    repositories {
+        mavenCentral()
     }
-    mavenCentral()
+    task prepareKotlinBuildScriptModel {}
 }
 
-
-test {
-    useJUnitPlatform()
-}
+group = 'edu.modicon'
