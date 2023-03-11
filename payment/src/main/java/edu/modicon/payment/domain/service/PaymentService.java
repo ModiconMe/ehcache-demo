@@ -1,9 +1,8 @@
 package edu.modicon.payment.domain.service;
 
-import edu.modicon.payment.application.dto.CustomerDto;
+import edu.modicon.common.CustomerDto;
 import edu.modicon.payment.domain.dao.PaymentDao;
 import edu.modicon.payment.domain.model.Payment;
-import edu.modicon.payment.infrastructure.config.JmsConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;

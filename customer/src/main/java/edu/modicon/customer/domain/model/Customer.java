@@ -21,6 +21,7 @@ public class Customer implements Serializable {
     @Serial
     private static final long serialVersionUID = 7467498459944585785L;
 
+    @With
     @Id
     @SequenceGenerator(
             name = "customer_id_seq",

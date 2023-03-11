@@ -1,15 +1,13 @@
 package edu.modicon.customer.infracture.queue;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.modicon.common.CustomerDto;
 import edu.modicon.customer.domain.model.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
-
-import javax.jms.TextMessage;
 
 @Component
 @Slf4j
@@ -32,7 +30,7 @@ public class JmsProducer {
     @Value("${spring.activemq.topic}")
     private String topic;
 
-    public void sendMessageToQueue(Customer customer){
+    public void sendMessageToQueue(CustomerDto customer){
         try{
             log.info("Attempting Send message to Topic: "+ queue);
             jmsQueueTemplate.convertAndSend(queue, customer);
@@ -41,7 +39,7 @@ public class JmsProducer {
         }
     }
 
-    public void sendMessageToTopic(Customer customer){
+    public void sendMessageToTopic(CustomerDto customer){
         try{
             log.info("Attempting Send message to Topic: "+ topic);
             jmsTopicTemplate.convertAndSend(topic, customer);

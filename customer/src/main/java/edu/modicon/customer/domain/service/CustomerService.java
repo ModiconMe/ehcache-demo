@@ -2,21 +2,19 @@ package edu.modicon.customer.domain.service;
 
 import edu.modicon.customer.domain.dao.CustomerDao;
 import edu.modicon.customer.domain.model.Customer;
-import edu.modicon.customer.application.dto.CustomerDto;
+import edu.modicon.common.CustomerDto;
 import edu.modicon.customer.application.dto.CustomerRegistrationRequest;
 import edu.modicon.customer.application.dto.CustomerUpdateRequest;
 import edu.modicon.customer.application.dto.CustomersRegistrationRequest;
-import edu.modicon.customer.domain.service.CustomerDtoMapper;
 import edu.modicon.customer.infracture.queue.JmsProducer;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
 public class CustomerService {
 
@@ -25,6 +23,16 @@ public class CustomerService {
 
     private final CacheManager cacheManager;
     private final JmsProducer jmsProducer;
+
+    public CustomerService(@Qualifier("jpa") CustomerDao customerDao,
+                           CustomerDtoMapper customerDtoMapper,
+                           CacheManager cacheManager,
+                           JmsProducer jmsProducer) {
+        this.customerDao = customerDao;
+        this.customerDtoMapper = customerDtoMapper;
+        this.cacheManager = cacheManager;
+        this.jmsProducer = jmsProducer;
+    }
 
     public List<CustomerDto> getAllCustomers() {
         log.info("fetch customers...");
@@ -43,8 +51,8 @@ public class CustomerService {
                 .build();
         customerDao.insertCustomer(customer);
 
-        jmsProducer.sendMessageToQueue(customer);
-        jmsProducer.sendMessageToTopic(customer);
+        jmsProducer.sendMessageToQueue(customerDtoMapper.apply(customer));
+        jmsProducer.sendMessageToTopic(customerDtoMapper.apply(customer));
     }
 
     public void addCustomers(CustomersRegistrationRequest request) {

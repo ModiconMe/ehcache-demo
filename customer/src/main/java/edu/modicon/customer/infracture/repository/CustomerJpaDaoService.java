@@ -1,7 +1,7 @@
-package edu.modicon.customer.domain.dao;
+package edu.modicon.customer.infracture.repository;
 
+import edu.modicon.customer.domain.dao.CustomerDao;
 import edu.modicon.customer.domain.model.Customer;
-import edu.modicon.customer.infracture.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Repository
+@Repository("jpa")
 public class CustomerJpaDaoService implements CustomerDao {
     private final CustomerRepository repository;
 

@@ -1,6 +1,8 @@
-package edu.modicon.payment.application.dto;
+package edu.modicon.common;
 
 import lombok.Builder;
+
+import java.io.Serializable;
 
 @Builder
 public record CustomerDto(
@@ -8,5 +10,5 @@ public record CustomerDto(
         String name,
         String email,
         int age
-) {
+) implements Serializable  {
 }

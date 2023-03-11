@@ -27,7 +27,7 @@ public class ActiveMQConfig {
     @Bean
     public ConnectionFactory connectionFactory() {
         var factory = new ActiveMQConnectionFactory(username, password, brokerUrl);
-        factory.setTrustedPackages(List.of("edu.modicon.customer", "java.lang"));
+        factory.setTrustedPackages(List.of("edu.modicon.common", "java.lang"));
         return factory;
     }
 

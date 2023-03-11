@@ -1,7 +1,7 @@
 package edu.modicon.customer.domain.service;
 
 import edu.modicon.customer.domain.model.Customer;
-import edu.modicon.customer.application.dto.CustomerDto;
+import edu.modicon.common.CustomerDto;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

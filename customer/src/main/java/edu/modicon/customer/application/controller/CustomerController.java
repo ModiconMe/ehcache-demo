@@ -1,6 +1,6 @@
 package edu.modicon.customer.application.controller;
 
-import edu.modicon.customer.application.dto.CustomerDto;
+import edu.modicon.common.CustomerDto;
 import edu.modicon.customer.application.dto.CustomerRegistrationRequest;
 import edu.modicon.customer.application.dto.CustomerUpdateRequest;
 import edu.modicon.customer.application.dto.CustomersRegistrationRequest;
