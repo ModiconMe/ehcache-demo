@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,14 +47,15 @@ public class CustomerJdbcDaoService implements CustomerDao, InitializingBean {
     @CachePut(value = "edu.modicon.customer.domain.model.Customer", key = "#result.id")
     @Override
     public Customer insertCustomer(Customer customer) {
-        var sql = "INSERT INTO customer (name, email, age) VALUES (?, ?, ?)";
+        var sql = "INSERT INTO customer (id, name, email, age) VALUES (?, ?, ?, ?)";
 
         var keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             var ps = con.prepareStatement(sql, new String[]{"id"});
-            ps.setString(1, customer.getName());
-            ps.setString(2, customer.getEmail());
-            ps.setInt(3, customer.getAge());
+            ps.setLong(1, 1L);
+            ps.setString(2, customer.getName());
+            ps.setString(3, customer.getEmail());
+            ps.setInt(4, customer.getAge());
             return ps;
         }, keyHolder);
 

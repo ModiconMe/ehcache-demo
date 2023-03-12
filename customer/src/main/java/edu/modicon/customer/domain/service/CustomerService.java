@@ -24,7 +24,7 @@ public class CustomerService {
     private final CacheManager cacheManager;
     private final JmsProducer jmsProducer;
 
-    public CustomerService(@Qualifier("jpa") CustomerDao customerDao,
+    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao,
                            CustomerDtoMapper customerDtoMapper,
                            CacheManager cacheManager,
                            JmsProducer jmsProducer) {
